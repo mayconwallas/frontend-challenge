@@ -9,3 +9,5 @@ export type {
   Nft,
   NftListResponse,
 } from '@/features/catalog/types/nft.types'
+
+export { CatalogPagination } from '@/features/catalog/components/catalog-pagination'

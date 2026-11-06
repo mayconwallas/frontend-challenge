@@ -1,16 +1,82 @@
+import { useNavigate } from '@tanstack/react-router'
+
 import { PageContainer } from '@/components/layout/page-container'
 import { Section } from '@/components/layout/section'
 import { Button } from '@/components/ui/button'
 import {
   CatalogFeedback,
+  CatalogPagination,
   CatalogSidebar,
   CatalogToolbar,
   NftGrid,
   useNfts,
 } from '@/features/catalog'
+import { Route } from '@/routes'
+
+const PAGE_SIZE = 3
 
 export function HomePage() {
-  const nftsQuery = useNfts()
+  const search = Route.useSearch()
+  const navigate = useNavigate({ from: '/' })
+
+  const filters = {
+    tab: search.tab ?? 'all',
+    collection: search.collection,
+    network: search.network,
+    sort: search.sort ?? 'recent',
+    page: search.page ?? 1,
+  } as const
+
+  const nftsQuery = useNfts(filters)
+
+  function handleTabChange(tab: typeof filters.tab) {
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        tab: tab === 'all' ? undefined : tab,
+        page: undefined,
+      }),
+    })
+  }
+
+  function handleSortChange(sort: typeof filters.sort) {
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        sort: sort === 'recent' ? undefined : sort,
+        page: undefined,
+      }),
+    })
+  }
+
+  function handleCollectionChange(collection?: string) {
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        collection,
+        page: undefined,
+      }),
+    })
+  }
+
+  function handleNetworkChange(network?: string) {
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        network,
+        page: undefined,
+      }),
+    })
+  }
+
+  function handlePageChange(page: number) {
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        page: page === 1 ? undefined : page,
+      }),
+    })
+  }
 
   return (
     <PageContainer>
@@ -34,10 +100,20 @@ export function HomePage() {
 
       <Section aria-label="Marketplace">
         <div className="flex items-start gap-12">
-          <CatalogSidebar />
+          <CatalogSidebar
+            collection={filters.collection}
+            network={filters.network}
+            onCollectionChange={handleCollectionChange}
+            onNetworkChange={handleNetworkChange}
+          />
 
           <div className="min-w-0 flex-1 lg:max-w-[842px]">
-            <CatalogToolbar />
+            <CatalogToolbar
+              tab={filters.tab}
+              sort={filters.sort}
+              onTabChange={handleTabChange}
+              onSortChange={handleSortChange}
+            />
 
             {nftsQuery.isPending && (
               <CatalogFeedback type="loading" />
@@ -54,7 +130,16 @@ export function HomePage() {
 
             {nftsQuery.isSuccess &&
               nftsQuery.data.items.length > 0 && (
-                <NftGrid nfts={nftsQuery.data.items} />
+                <>
+                  <NftGrid nfts={nftsQuery.data.items} />
+
+                  <CatalogPagination
+                    page={filters.page}
+                    total={nftsQuery.data.total}
+                    pageSize={PAGE_SIZE}
+                    onPageChange={handlePageChange}
+                  />
+                </>
               )}
           </div>
         </div>

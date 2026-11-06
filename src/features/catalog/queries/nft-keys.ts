@@ -1,9 +1,11 @@
+import type { NftFilters } from '@/features/catalog/types/nft.types'
+
 export const nftKeys = {
   all: ['nfts'] as const,
 
   lists: () => [...nftKeys.all, 'list'] as const,
 
-  list: (filters: Record<string, string> = {}) =>
+  list: (filters: NftFilters) =>
     [...nftKeys.lists(), filters] as const,
 
   details: () => [...nftKeys.all, 'detail'] as const,
