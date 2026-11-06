@@ -4,11 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+  "dev": "vite",
+  "build": "tsc -b && vite build",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "test:e2e": "playwright test",
+  "test:e2e:ui": "playwright test --ui",
+  "test:e2e:report": "playwright show-report"
+},
   "dependencies": {
     "@base-ui/react": "^1.9.0",
     "@tailwindcss/vite": "^4.3.4",
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.0",
     "@tanstack/eslint-plugin-query": "^5.106.1",
     "@tanstack/router-plugin": "^1.168.48",
     "@types/node": "^24.19.2",
