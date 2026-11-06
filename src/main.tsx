@@ -1,7 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
+
 import { QueryProvider } from '@/app/providers/query-provider'
+import { enableMocking } from '@/mocks/enable-mocking'
+
 import { routeTree } from './routeTree.gen'
 
 import './index.css'
@@ -16,10 +19,14 @@ declare module '@tanstack/react-router' {
   }
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <QueryProvider>
-      <RouterProvider router={router} />
-    </QueryProvider>
-  </StrictMode>,
-)
+function renderApplication() {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <QueryProvider>
+        <RouterProvider router={router} />
+      </QueryProvider>
+    </StrictMode>,
+  )
+}
+
+enableMocking().then(renderApplication)
