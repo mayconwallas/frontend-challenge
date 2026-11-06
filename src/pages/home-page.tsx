@@ -1,8 +1,11 @@
-import { Button } from '@/components/ui/button'
 import { PageContainer } from '@/components/layout/page-container'
 import { Section } from '@/components/layout/section'
+import { Button } from '@/components/ui/button'
+import { useNfts } from '@/features/catalog'
 
 export function HomePage() {
+  const nftsQuery = useNfts()
+
   return (
     <PageContainer>
       <Section>
@@ -21,6 +24,36 @@ export function HomePage() {
         <Button className="mt-6">
           Explorar
         </Button>
+      </Section>
+
+      <Section aria-labelledby="catalog-title">
+        <h2
+          id="catalog-title"
+          className="text-xl font-semibold uppercase"
+        >
+          NFTs em destaque
+        </h2>
+
+        {nftsQuery.isPending && (
+          <p className="mt-4 text-muted-foreground">
+            Carregando NFTs...
+          </p>
+        )}
+
+        {nftsQuery.isError && (
+          <p
+            role="alert"
+            className="mt-4 text-destructive"
+          >
+            Não foi possível carregar os NFTs.
+          </p>
+        )}
+
+        {nftsQuery.isSuccess && (
+          <p className="mt-4 text-muted-foreground">
+            {nftsQuery.data.total} NFTs disponíveis
+          </p>
+        )}
       </Section>
     </PageContainer>
   )
