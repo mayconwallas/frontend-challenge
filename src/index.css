@@ -36,40 +36,32 @@
 }
 
 :root {
-  /*
-   * Temporary Kurio design tokens.
-   *
-   * These values reproduce the visual direction visible in the supplied
-   * Figma export. Exact values can be replaced when inspected directly
-   * from Figma without changing component implementations.
-   */
+  --background: #140d0a;
+  --foreground: #f5f1eb;
 
-  --background: #17120f;
-  --foreground: #f5eee7;
+  --card: #241612;
+  --card-foreground: #f5f1eb;
 
-  --card: #211915;
-  --card-foreground: #f5eee7;
+  --popover: #241612;
+  --popover-foreground: #f5f1eb;
 
-  --popover: #211915;
-  --popover-foreground: #f5eee7;
+  --primary: #d28a4c;
+  --primary-foreground: #140d0a;
 
-  --primary: #d88a45;
-  --primary-foreground: #17120f;
+  --secondary: #38220f;
+  --secondary-foreground: #cfb28c;
 
-  --secondary: #2b211b;
-  --secondary-foreground: #f5eee7;
+  --muted: #241612;
+  --muted-foreground: #cfb28c;
 
-  --muted: #261d18;
-  --muted-foreground: #a99b90;
-
-  --accent: #d88a45;
-  --accent-foreground: #17120f;
+  --accent: #e89b55;
+  --accent-foreground: #140d0a;
 
   --destructive: #dc2626;
 
-  --border: #49352a;
-  --input: #49352a;
-  --ring: #d88a45;
+  --border: #3f2319;
+  --input: #55321f;
+  --ring: #d28a4c;
 
   --radius: 0.375rem;
 
@@ -92,16 +84,7 @@
     background: var(--background);
     color: var(--foreground);
 
-    font-family:
-      ui-monospace,
-      "SFMono-Regular",
-      "SF Mono",
-      Menlo,
-      Monaco,
-      Consolas,
-      "Liberation Mono",
-      "Courier New",
-      monospace;
+    font-family: "Roboto Mono", monospace;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
