@@ -22,12 +22,15 @@ test.describe('Authentication', () => {
       .fill('collector@kurio.com')
 
     await page
-      .getByLabel('Senha')
+      .getByLabel('Senha', {
+        exact: true,
+      })
       .fill('Kurio123!')
 
     await page
       .getByRole('button', {
         name: 'Entrar',
+        exact: true,
       })
       .click()
 
@@ -58,18 +61,23 @@ test.describe('Authentication', () => {
       .fill('invalid@kurio.com')
 
     await page
-      .getByLabel('Senha')
+      .getByLabel('Senha', {
+        exact: true,
+      })
       .fill('senhaerrada')
 
     await page
       .getByRole('button', {
         name: 'Entrar',
+        exact: true,
       })
       .click()
 
     await expect(
       page.getByRole('alert'),
-    ).toHaveText('E-mail ou senha inválidos.')
+    ).toHaveText(
+      'E-mail ou senha inválidos.',
+    )
   })
 
   test('logs out and keeps the session cleared after reload', async ({
@@ -82,14 +90,19 @@ test.describe('Authentication', () => {
       .fill('collector@kurio.com')
 
     await page
-      .getByLabel('Senha')
+      .getByLabel('Senha', {
+        exact: true,
+      })
       .fill('Kurio123!')
 
     await page
       .getByRole('button', {
         name: 'Entrar',
+        exact: true,
       })
       .click()
+
+    await expect(page).toHaveURL(/\/$/)
 
     await page
       .getByRole('button', {
@@ -126,12 +139,21 @@ test.describe('Authentication', () => {
       .fill('wallas@teste.com')
 
     await page
-      .getByLabel('Senha')
+      .getByLabel('Senha', {
+        exact: true,
+      })
+      .fill('Kurio123!')
+
+    await page
+      .getByLabel('Confirmar senha', {
+        exact: true,
+      })
       .fill('Kurio123!')
 
     await page
       .getByRole('button', {
         name: 'Criar conta',
+        exact: true,
       })
       .click()
 
@@ -164,12 +186,15 @@ test.describe('Authentication', () => {
       .fill('wallas@teste.com')
 
     await page
-      .getByLabel('Senha')
+      .getByLabel('Senha', {
+        exact: true,
+      })
       .fill('Kurio123!')
 
     await page
       .getByRole('button', {
         name: 'Entrar',
+        exact: true,
       })
       .click()
 
@@ -180,5 +205,48 @@ test.describe('Authentication', () => {
         name: 'Sair',
       }),
     ).toBeVisible()
+  })
+
+  test('rejects registration when passwords do not match', async ({
+    page,
+  }) => {
+    await page.goto('/register')
+
+    await page
+      .getByLabel('Nome')
+      .fill('Wallas Teste')
+
+    await page
+      .getByLabel('E-mail')
+      .fill('wallas@teste.com')
+
+    await page
+      .getByLabel('Senha', {
+        exact: true,
+      })
+      .fill('Kurio123!')
+
+    await page
+      .getByLabel('Confirmar senha', {
+        exact: true,
+      })
+      .fill('OutraSenha123!')
+
+    await page
+      .getByRole('button', {
+        name: 'Criar conta',
+        exact: true,
+      })
+      .click()
+
+    await expect(
+      page.getByRole('alert'),
+    ).toHaveText(
+      'As senhas informadas não correspondem.',
+    )
+
+    await expect(page).toHaveURL(
+      /\/register$/,
+    )
   })
 })
