@@ -11,7 +11,8 @@ test('renders the application shell', async ({ page }) => {
 
   await expect(
     page.getByRole('button', {
-      name: /explorar/i,
+      name: 'Explorar NFTs',
+      exact: true,
     }),
   ).toBeVisible()
 
