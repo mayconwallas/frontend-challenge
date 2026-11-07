@@ -19,43 +19,50 @@ test.describe('Checkout quote', () => {
     await page.goto('/cart')
   })
 
-  test('shows the cart quote summary', async ({ page }) => {
+  test('shows the cart quote summary', async ({
+    page,
+  }) => {
+    const summary =
+      page.getByRole('complementary')
+
     await expect(
-      page.getByText('Subtotal', {
+      summary.getByText('Subtotal', {
         exact: true,
       }),
     ).toBeVisible()
 
     await expect(
-      page.getByText('Desconto', {
+      summary.getByText('Desconto', {
         exact: true,
       }),
     ).toBeVisible()
 
     await expect(
-      page.getByText('Taxa de rede', {
+      summary.getByText('Taxa de rede', {
         exact: true,
       }),
     ).toBeVisible()
 
     await expect(
-      page.getByText('Total', {
+      summary.getByText('Total', {
         exact: true,
       }),
     ).toBeVisible()
 
     await expect(
-      page.getByText('1.1900 ETH'),
+      summary.getByText('1.1900 ETH'),
     ).toBeVisible()
 
     await expect(
-      page.getByText('1.1925 ETH'),
+      summary.getByText('1.1925 ETH'),
     ).toBeVisible()
   })
 
-  test('applies a valid coupon', async ({ page }) => {
+  test('applies a valid coupon', async ({
+    page,
+  }) => {
     await page
-      .getByLabel('Cupom')
+      .getByLabel('Cupom de desconto')
       .fill('KURIO10')
 
     await page
@@ -65,21 +72,29 @@ test.describe('Checkout quote', () => {
       .click()
 
     await expect(
-      page.getByText('Cupom KURIO10 aplicado'),
+      page.getByText(
+        'Cupom KURIO10 aplicado',
+      ),
     ).toBeVisible()
 
     await expect(
-      page.getByText('0.1190 ETH'),
+      page
+        .getByRole('complementary')
+        .getByText('0.1190 ETH'),
     ).toBeVisible()
 
     await expect(
-      page.getByText('1.0735 ETH'),
+      page
+        .getByRole('complementary')
+        .getByText('1.0735 ETH'),
     ).toBeVisible()
   })
 
-  test('rejects an expired coupon', async ({ page }) => {
+  test('rejects an expired coupon', async ({
+    page,
+  }) => {
     await page
-      .getByLabel('Cupom')
+      .getByLabel('Cupom de desconto')
       .fill('KURIOEXPIRED')
 
     await page
@@ -89,13 +104,17 @@ test.describe('Checkout quote', () => {
       .click()
 
     await expect(
-      page.getByText('Cupom inválido ou expirado.'),
+      page.getByText(
+        'Cupom inválido ou expirado.',
+      ),
     ).toBeVisible()
   })
 
-  test('rejects an invalid coupon', async ({ page }) => {
+  test('rejects an invalid coupon', async ({
+    page,
+  }) => {
     await page
-      .getByLabel('Cupom')
+      .getByLabel('Cupom de desconto')
       .fill('TESTE123')
 
     await page
@@ -105,7 +124,9 @@ test.describe('Checkout quote', () => {
       .click()
 
     await expect(
-      page.getByText('Cupom inválido ou expirado.'),
+      page.getByText(
+        'Cupom inválido ou expirado.',
+      ),
     ).toBeVisible()
   })
 })
