@@ -6,6 +6,8 @@ import { cartHandlers } from '@/mocks/handlers/cart.handlers'
 import { quoteHandlers } from '@/mocks/handlers/quote.handlers'
 import { authHandlers } from '@/mocks/handlers/auth.handlers'
 import { orderHandlers } from '@/mocks/handlers/order.handlers'
+import { profileHandlers } from '@/mocks/handlers/profile.handlers'
+
 
 
 export const worker = setupWorker(
@@ -16,4 +18,5 @@ export const worker = setupWorker(
   ...quoteHandlers,
   ...authHandlers,
   ...orderHandlers,
+  ...profileHandlers,
 )

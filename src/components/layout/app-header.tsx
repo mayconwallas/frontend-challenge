@@ -44,9 +44,12 @@ export function AppHeader() {
 
           {session ? (
             <>
-              <span className="hidden text-sm text-foreground sm:inline">
-                {session.user.name}
-              </span>
+              <Link
+  to="/profile"
+  className="hidden text-sm text-foreground transition-colors hover:text-primary sm:inline"
+>
+  {session.user.name}
+</Link>
 
               <button
                 type="button"
