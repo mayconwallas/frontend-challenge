@@ -2,6 +2,13 @@ interface MockUser {
   id: string
   name: string
   email: string
+  passwordHash: string
+}
+
+interface CreateUserInput {
+  id: string
+  name: string
+  email: string
   password: string
 }
 
@@ -30,28 +37,68 @@ function persistUsers(users: MockUser[]) {
   )
 }
 
-export function createUser(user: MockUser) {
+async function hashPassword(
+  password: string,
+) {
+  const encodedPassword =
+    new TextEncoder().encode(password)
+
+  const hashBuffer =
+    await crypto.subtle.digest(
+      'SHA-256',
+      encodedPassword,
+    )
+
+  return Array.from(
+    new Uint8Array(hashBuffer),
+  )
+    .map((byte) =>
+      byte.toString(16).padStart(2, '0'),
+    )
+    .join('')
+}
+
+export async function createUser(
+  user: CreateUserInput,
+) {
   const users = loadUsers()
 
-  users.push(user)
+  const passwordHash =
+    await hashPassword(user.password)
+
+  const storedUser: MockUser = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    passwordHash,
+  }
+
+  users.push(storedUser)
 
   persistUsers(users)
 }
 
-export function findUserByCredentials(
+export async function findUserByCredentials(
   email: string,
   password: string,
 ) {
+  const passwordHash =
+    await hashPassword(password)
+
   return loadUsers().find(
     (user) =>
-      user.email.toLowerCase() === email.toLowerCase() &&
-      user.password === password,
+      user.email.toLowerCase() ===
+        email.toLowerCase() &&
+      user.passwordHash === passwordHash,
   )
 }
 
-export function findUserByEmail(email: string) {
+export function findUserByEmail(
+  email: string,
+) {
   return loadUsers().find(
     (user) =>
-      user.email.toLowerCase() === email.toLowerCase(),
+      user.email.toLowerCase() ===
+      email.toLowerCase(),
   )
 }
