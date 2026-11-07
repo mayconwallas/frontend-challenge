@@ -4,6 +4,7 @@ import { PageContainer } from '@/components/layout/page-container'
 import { Section } from '@/components/layout/section'
 import { Button } from '@/components/ui/button'
 import { useNft } from '@/features/catalog'
+import { FavoriteButton } from '@/features/favorites'
 
 interface NftDetailPageProps {
   nftId: string
@@ -93,9 +94,16 @@ export function NftDetailPage({
               {nft.collection.replace('-', ' ')}
             </p>
 
-            <h1 className="mt-3 text-[28px] font-bold leading-tight text-foreground sm:text-[34px] lg:text-[43px] lg:leading-[56px]">
-              {nft.name}
-            </h1>
+            <div className="mt-3 flex items-start justify-between gap-4">
+              <h1 className="min-w-0 text-[28px] font-bold leading-tight text-foreground sm:text-[34px] lg:text-[43px] lg:leading-[56px]">
+                {nft.name}
+              </h1>
+
+              <FavoriteButton
+                nftId={nft.id}
+                className="mt-1 shrink-0"
+              />
+            </div>
 
             <p className="mt-6 text-[24px] font-bold leading-none text-accent">
               {nft.priceEth} ETH
