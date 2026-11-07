@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { PageContainer } from '@/components/layout/page-container'
 import { Section } from '@/components/layout/section'
 import { Button } from '@/components/ui/button'
+import { useAddCartItem } from '@/features/cart'
 import { useNft } from '@/features/catalog'
 import { FavoriteButton } from '@/features/favorites'
 
@@ -20,6 +21,7 @@ export function NftDetailPage({
   nftId,
 }: NftDetailPageProps) {
   const nftQuery = useNft(nftId)
+  const addCartItemMutation = useAddCartItem()
 
   if (nftQuery.isPending) {
     return (
@@ -153,9 +155,17 @@ export function NftDetailPage({
 
             <Button
               type="button"
+              disabled={addCartItemMutation.isPending}
+              onClick={() =>
+                addCartItemMutation.mutate({
+                  nftId: nft.id,
+                })
+              }
               className="mt-8 h-10 w-full rounded-[6px] px-7 text-[16px] font-bold lg:w-auto"
             >
-              Adicionar ao carrinho
+              {addCartItemMutation.isPending
+                ? 'Adicionando...'
+                : 'Adicionar ao carrinho'}
             </Button>
           </div>
         </div>

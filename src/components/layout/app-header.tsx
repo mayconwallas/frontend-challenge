@@ -2,8 +2,13 @@ import { Link } from '@tanstack/react-router'
 
 import { DesktopNavigation } from '@/components/layout/desktop-navigation'
 import { PageContainer } from '@/components/layout/page-container'
+import { useCart } from '@/features/cart'
 
 export function AppHeader() {
+  const cartQuery = useCart()
+
+  const totalItems = cartQuery.data?.totalItems ?? 0
+
   return (
     <header className="border-b border-border">
       <PageContainer className="flex h-16 items-center justify-between">
@@ -19,10 +24,10 @@ export function AppHeader() {
 
         <div className="hidden items-center gap-6 lg:flex">
           <span
-            aria-label="6 itens no carrinho"
+            aria-label={`${totalItems} itens no carrinho`}
             className="text-sm text-foreground"
           >
-            6
+            {totalItems}
           </span>
 
           <Link
