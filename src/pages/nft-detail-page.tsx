@@ -9,6 +9,12 @@ interface NftDetailPageProps {
   nftId: string
 }
 
+const networkLabels = {
+  ethereum: 'Ethereum',
+  polygon: 'Polygon',
+  solana: 'Solana',
+} as const
+
 export function NftDetailPage({
   nftId,
 }: NftDetailPageProps) {
@@ -18,9 +24,14 @@ export function NftDetailPage({
     return (
       <PageContainer>
         <Section>
-          <p className="text-muted-foreground">
-            Carregando NFT...
-          </p>
+          <div
+            role="status"
+            className="flex min-h-[320px] items-center justify-center"
+          >
+            <p className="text-sm text-muted-foreground">
+              Carregando NFT...
+            </p>
+          </div>
         </Section>
       </PageContainer>
     )
@@ -30,16 +41,23 @@ export function NftDetailPage({
     return (
       <PageContainer>
         <Section>
-          <div role="alert">
+          <div
+            role="alert"
+            className="flex min-h-[320px] flex-col items-center justify-center text-center"
+          >
             <h1 className="text-2xl font-bold text-foreground">
               NFT não encontrado
             </h1>
 
+            <p className="mt-3 max-w-md text-sm leading-6 text-muted-foreground">
+              O NFT solicitado não existe ou não está mais disponível.
+            </p>
+
             <Link
               to="/"
-              className="mt-4 inline-block text-accent"
+              className="mt-6 text-sm font-medium text-accent transition-colors hover:text-primary"
             >
-              Voltar ao catálogo
+              ← Voltar ao catálogo
             </Link>
           </div>
         </Section>
@@ -54,66 +72,81 @@ export function NftDetailPage({
       <Section>
         <Link
           to="/"
-          className="mb-8 inline-block text-sm text-muted-foreground transition-colors hover:text-accent"
+          className="mb-6 inline-flex text-sm text-muted-foreground transition-colors hover:text-accent lg:mb-8"
         >
           ← Voltar ao catálogo
         </Link>
 
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="overflow-hidden rounded-[15px] bg-card">
-            <img
-              src={nft.imageUrl}
-              alt={`NFT ${nft.name}`}
-              className="aspect-square w-full object-cover"
-            />
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
+          <div className="mx-auto w-full max-w-[520px] lg:mx-0">
+            <div className="bg-card p-1">
+              <img
+                src={nft.imageUrl}
+                alt={`NFT ${nft.name}`}
+                className="aspect-square w-full rounded-[15px] object-cover"
+              />
+            </div>
           </div>
 
-          <div className="flex flex-col justify-center">
-            <p className="text-sm uppercase tracking-[0.1em] text-muted-foreground">
-              {nft.collection}
+          <div className="min-w-0">
+            <p className="text-[14px] font-medium uppercase leading-4 tracking-[0.1em] text-muted-foreground">
+              {nft.collection.replace('-', ' ')}
             </p>
 
-            <h1 className="mt-3 text-3xl font-bold leading-tight text-foreground lg:text-[43px] lg:leading-[56px]">
+            <h1 className="mt-3 text-[28px] font-bold leading-tight text-foreground sm:text-[34px] lg:text-[43px] lg:leading-[56px]">
               {nft.name}
             </h1>
 
-            <p className="mt-6 text-[24px] font-bold text-accent">
+            <p className="mt-6 text-[24px] font-bold leading-none text-accent">
               {nft.priceEth} ETH
             </p>
 
-            <dl className="mt-8 space-y-4 border-y border-border py-6">
-              <div className="flex justify-between gap-4">
-                <dt className="text-muted-foreground">
-                  Criador
-                </dt>
+            <div className="mt-8 border-y border-border py-6">
+              <dl className="space-y-5">
+                <div className="flex items-center justify-between gap-6">
+                  <dt className="text-sm text-muted-foreground">
+                    Criador
+                  </dt>
 
-                <dd className="text-foreground">
-                  {nft.creator}
-                </dd>
-              </div>
+                  <dd className="text-sm font-medium text-foreground">
+                    {nft.creator}
+                  </dd>
+                </div>
 
-              <div className="flex justify-between gap-4">
-                <dt className="text-muted-foreground">
-                  Rede
-                </dt>
+                <div className="flex items-center justify-between gap-6">
+                  <dt className="text-sm text-muted-foreground">
+                    Rede
+                  </dt>
 
-                <dd className="capitalize text-foreground">
-                  {nft.network}
-                </dd>
-              </div>
+                  <dd className="text-sm font-medium text-foreground">
+                    {networkLabels[nft.network]}
+                  </dd>
+                </div>
 
-              <div className="flex justify-between gap-4">
-                <dt className="text-muted-foreground">
-                  Edições disponíveis
-                </dt>
+                <div className="flex items-center justify-between gap-6">
+                  <dt className="text-sm text-muted-foreground">
+                    Edições disponíveis
+                  </dt>
 
-                <dd className="text-foreground">
-                  {nft.availableEditions}
-                </dd>
-              </div>
-            </dl>
+                  <dd className="text-sm font-medium text-foreground">
+                    {nft.availableEditions}
+                  </dd>
+                </div>
+              </dl>
+            </div>
 
-            <Button className="mt-8 w-full lg:w-fit">
+            <div className="mt-8">
+              <p className="text-sm leading-6 text-muted-foreground">
+                Obra digital disponível na Kurio. Consulte as
+                informações da edição, rede e disponibilidade antes
+                de continuar com a compra.
+              </p>
+            </div>
+
+            <Button
+              type="button"
+              className="mt-8 h-10 w-full rounded-[6px] px-7 text-[16px] font-bold lg:w-auto"
+            >
               Adicionar ao carrinho
             </Button>
           </div>

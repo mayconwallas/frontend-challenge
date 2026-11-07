@@ -35,9 +35,9 @@ test.describe('NFT detail', () => {
     ).toBeVisible()
 
     await expect(
-      page.getByText('ethereum', {
-        exact: true,
-      }),
+      page.getByText('Ethereum', {
+  exact: true,
+}),
     ).toBeVisible()
 
     await expect(
