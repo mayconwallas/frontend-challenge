@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import { Link } from '@tanstack/react-router'
 
 import {
   useCart,
@@ -37,7 +38,9 @@ export function CartPage() {
 
   const items = cartQuery.data.items
 
-  function handleApplyCoupon(event: FormEvent<HTMLFormElement>) {
+  function handleApplyCoupon(
+    event: FormEvent<HTMLFormElement>,
+  ) {
     event.preventDefault()
 
     const coupon = couponInput.trim()
@@ -209,11 +212,15 @@ export function CartPage() {
               <dl className="mt-8 space-y-4 text-sm">
                 <div className="flex justify-between gap-4">
                   <dt>Subtotal</dt>
-                  <dd>{quoteQuery.data.subtotalEth} ETH</dd>
+
+                  <dd>
+                    {quoteQuery.data.subtotalEth} ETH
+                  </dd>
                 </div>
 
                 <div className="flex justify-between gap-4">
                   <dt>Desconto</dt>
+
                   <dd>
                     − {quoteQuery.data.discountEth} ETH
                   </dd>
@@ -221,6 +228,7 @@ export function CartPage() {
 
                 <div className="flex justify-between gap-4">
                   <dt>Taxa de rede</dt>
+
                   <dd>
                     {quoteQuery.data.networkFeeEth} ETH
                   </dd>
@@ -228,10 +236,22 @@ export function CartPage() {
 
                 <div className="flex justify-between gap-4 border-t border-border pt-4 text-base font-semibold">
                   <dt>Total</dt>
-                  <dd>{quoteQuery.data.totalEth} ETH</dd>
+
+                  <dd>
+                    {quoteQuery.data.totalEth} ETH
+                  </dd>
                 </div>
               </dl>
             ) : null}
+
+            {quoteQuery.isSuccess && (
+              <Link
+                to="/checkout"
+                className="mt-6 block w-full bg-primary px-5 py-3 text-center font-medium text-primary-foreground"
+              >
+                Continuar para pagamento
+              </Link>
+            )}
           </aside>
         </div>
       )}

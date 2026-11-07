@@ -77,3 +77,8 @@ export function removeCartStateItem(nftId: string) {
   cartItems.delete(nftId)
   persistCartState()
 }
+
+export function clearCartState() {
+  cartItems.clear()
+  persistCartState()
+}
