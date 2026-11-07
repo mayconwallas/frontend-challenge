@@ -22,13 +22,14 @@ export function AppHeader() {
 
         <DesktopNavigation />
 
-        <div className="hidden items-center gap-6 lg:flex">
-          <span
-            aria-label={`${totalItems} itens no carrinho`}
-            className="text-sm text-foreground"
-          >
-            {totalItems}
-          </span>
+        <div className="flex items-center gap-4">
+          <Link
+  to="/cart"
+  aria-label={`${totalItems} itens no carrinho`}
+  className="text-sm text-foreground transition-colors hover:text-primary"
+>
+  Carrinho ({totalItems})
+</Link>
 
           <Link
             to="/"
