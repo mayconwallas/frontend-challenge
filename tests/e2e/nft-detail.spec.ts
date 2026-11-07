@@ -17,31 +17,38 @@ test.describe('NFT detail', () => {
     await expect(
       page.getByRole('heading', {
         name: 'Emerald Ape #042',
+        level: 1,
       }),
     ).toBeVisible()
 
     await expect(
-      page.getByText('1.19 ETH'),
+      page.getByText('1.19 ETH', {
+        exact: true,
+      }),
     ).toBeVisible()
   })
 
   test('shows NFT information', async ({ page }) => {
     await page.goto('/nft/emerald-ape-042')
 
+    const nftSummary = page
+      .locator('dl')
+      .first()
+
     await expect(
-      page.getByText('Kurio', {
+      nftSummary.getByText('Kurio', {
         exact: true,
       }),
     ).toBeVisible()
 
     await expect(
-      page.getByText('Ethereum', {
-  exact: true,
-}),
+      nftSummary.getByText('Ethereum', {
+        exact: true,
+      }),
     ).toBeVisible()
 
     await expect(
-      page.getByText('50', {
+      nftSummary.getByText('50', {
         exact: true,
       }),
     ).toBeVisible()
@@ -51,6 +58,36 @@ test.describe('NFT detail', () => {
         name: 'Adicionar ao carrinho',
       }),
     ).toBeVisible()
+
+    await expect(
+      page.getByRole('button', {
+        name: 'Comprar NFT',
+      }),
+    ).toBeVisible()
+
+    await expect(
+      page.getByRole('tab', {
+        name: 'Detalhes do NFT',
+      }),
+    ).toBeVisible()
+
+    await expect(
+      page.getByRole('tab', {
+        name: 'Avaliações',
+      }),
+    ).toBeVisible()
+
+    await expect(
+      page.getByRole('button', {
+        name: 'Diminuir quantidade de Emerald Ape #042',
+      }),
+    ).toBeDisabled()
+
+    await expect(
+      page.getByRole('button', {
+        name: 'Aumentar quantidade de Emerald Ape #042',
+      }),
+    ).toBeEnabled()
   })
 
   test('shows not found state for an invalid NFT', async ({
