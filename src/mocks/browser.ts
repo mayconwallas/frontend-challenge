@@ -4,6 +4,7 @@ import { nftHandlers } from '@/mocks/handlers/nft.handlers'
 import { favoriteHandlers } from '@/mocks/handlers/favorite.handlers'
 import { cartHandlers } from '@/mocks/handlers/cart.handlers'
 import { quoteHandlers } from '@/mocks/handlers/quote.handlers'
+import { authHandlers } from '@/mocks/handlers/auth.handlers'
 
 
 export const worker = setupWorker(
@@ -12,4 +13,5 @@ export const worker = setupWorker(
   ...favoriteHandlers,
   ...cartHandlers,
   ...quoteHandlers,
+  ...authHandlers,
 )

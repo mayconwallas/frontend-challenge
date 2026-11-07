@@ -7,5 +7,6 @@ export function useQuote(coupon?: string) {
   return useQuery({
     queryKey: quoteKeys.detail(coupon),
     queryFn: () => getQuote({ coupon }),
+    retry: false,
   })
 }
