@@ -62,7 +62,7 @@ test.describe('Orders flow', () => {
   }) => {
     await page
       .getByRole('button', {
-        name: 'Finalizar compra',
+        name: 'Confirmar compra',
       })
       .click()
 
@@ -94,7 +94,7 @@ test.describe('Orders flow', () => {
   }) => {
     await page
       .getByRole('button', {
-        name: 'Finalizar compra',
+        name: 'Confirmar compra',
       })
       .click()
 
@@ -148,7 +148,7 @@ test.describe('Orders flow', () => {
   }) => {
     await page
       .getByRole('button', {
-        name: 'Finalizar compra',
+        name: 'Confirmar compra',
       })
       .click()
 

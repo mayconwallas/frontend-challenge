@@ -169,9 +169,12 @@ function ProfileContent({
               Dados do perfil
             </Link>
 
-            <span className="block shrink-0 px-5 py-3 text-sm text-muted-foreground">
-              Carteiras
-            </span>
+            <Link
+  to="/profile/wallets"
+  className="block shrink-0 px-5 py-3 text-sm text-muted-foreground transition-colors hover:text-primary"
+>
+  Carteiras
+</Link>
 
             <span className="block shrink-0 px-5 py-3 text-sm text-muted-foreground">
               Atividade

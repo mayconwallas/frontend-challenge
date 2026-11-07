@@ -7,6 +7,7 @@ import { quoteHandlers } from '@/mocks/handlers/quote.handlers'
 import { authHandlers } from '@/mocks/handlers/auth.handlers'
 import { orderHandlers } from '@/mocks/handlers/order.handlers'
 import { profileHandlers } from '@/mocks/handlers/profile.handlers'
+import { walletHandlers } from '@/mocks/handlers/wallet.handlers'
 
 
 
@@ -19,4 +20,5 @@ export const worker = setupWorker(
   ...authHandlers,
   ...orderHandlers,
   ...profileHandlers,
+  ...walletHandlers,
 )
