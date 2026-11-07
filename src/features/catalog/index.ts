@@ -11,3 +11,4 @@ export type {
 } from '@/features/catalog/types/nft.types'
 
 export { CatalogPagination } from '@/features/catalog/components/catalog-pagination'
+export { useNft } from '@/features/catalog/hooks/use-nft'

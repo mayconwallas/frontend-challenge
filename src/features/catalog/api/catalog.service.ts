@@ -1,4 +1,5 @@
 import type {
+  NftDetailResponse,
   NftFilters,
   NftListResponse,
 } from '@/features/catalog/types/nft.types'
@@ -20,6 +21,16 @@ export async function getNfts(
       }),
     },
   })
+
+  return response.data
+}
+
+export async function getNft(
+  nftId: string,
+): Promise<NftDetailResponse> {
+  const response = await apiClient.get<NftDetailResponse>(
+    `/nfts/${nftId}`,
+  )
 
   return response.data
 }

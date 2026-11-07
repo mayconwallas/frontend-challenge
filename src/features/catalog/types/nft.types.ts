@@ -29,3 +29,7 @@ export interface NftFilters {
   sort: NftSort
   page: number
 }
+
+export interface NftDetailResponse {
+  item: Nft
+}

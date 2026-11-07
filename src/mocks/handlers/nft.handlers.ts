@@ -55,13 +55,35 @@ export const nftHandlers = [
     }
 
     const total = items.length
-
     const start = (page - 1) * PAGE_SIZE
     const end = start + PAGE_SIZE
 
     return HttpResponse.json({
       items: items.slice(start, end),
       total,
+    })
+  }),
+
+  http.get('/api/nfts/:nftId', ({ params }) => {
+    const nftId = String(params.nftId)
+
+    const nft = nftFixtures.find(
+      (item) => item.id === nftId,
+    )
+
+    if (!nft) {
+      return HttpResponse.json(
+        {
+          message: 'NFT não encontrado.',
+        },
+        {
+          status: 404,
+        },
+      )
+    }
+
+    return HttpResponse.json({
+      item: nft,
     })
   }),
 ]
