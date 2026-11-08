@@ -23,16 +23,26 @@ export function CartPage() {
 
   if (cartQuery.isPending) {
     return (
-      <main className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6">
-        <p>Carregando carrinho...</p>
+      <main className="mx-auto flex min-h-[420px] w-full max-w-[1200px] items-center justify-center px-4">
+        <p
+          role="status"
+          className="text-sm text-muted-foreground"
+        >
+          Carregando carrinho...
+        </p>
       </main>
     )
   }
 
   if (cartQuery.isError) {
     return (
-      <main className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6">
-        <p>Não foi possível carregar o carrinho.</p>
+      <main className="mx-auto flex min-h-[420px] w-full max-w-[1200px] items-center justify-center px-4">
+        <p
+          role="alert"
+          className="text-sm text-red-500"
+        >
+          Não foi possível carregar o carrinho.
+        </p>
       </main>
     )
   }
@@ -59,20 +69,28 @@ export function CartPage() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:py-12">
-      <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+    <main className="mx-auto w-full max-w-[1200px] px-4 pb-28 pt-7 sm:px-6 lg:pb-16 lg:pt-12">
+      <div className="flex items-center gap-4">
+        <Link
+          to="/"
+          aria-label="Voltar ao catálogo"
+          className="flex size-9 items-center justify-center rounded-full border border-border text-foreground transition-colors hover:border-primary hover:text-primary lg:hidden"
+        >
+          ←
+        </Link>
+
         <div>
-          <p className="text-sm font-medium text-primary">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
             Sua seleção
           </p>
 
-          <h1 className="mt-1 text-3xl font-semibold">
+          <h1 className="mt-1 text-2xl font-bold text-foreground sm:text-3xl">
             Carrinho
           </h1>
         </div>
 
         {items.length > 0 && (
-          <p className="text-sm text-muted-foreground">
+          <p className="ml-auto text-xs text-muted-foreground">
             {cartQuery.data.totalItems}{' '}
             {cartQuery.data.totalItems === 1
               ? 'item'
@@ -82,8 +100,8 @@ export function CartPage() {
       </div>
 
       {items.length === 0 ? (
-        <section className="border border-dashed border-border px-6 py-16 text-center">
-          <h2 className="text-xl font-semibold">
+        <section className="mt-8 rounded-[12px] border border-dashed border-border bg-card px-6 py-16 text-center">
+          <h2 className="text-xl font-bold text-foreground">
             Seu carrinho está vazio.
           </h2>
 
@@ -94,24 +112,24 @@ export function CartPage() {
 
           <Link
             to="/"
-            className="mt-6 inline-block bg-primary px-6 py-3 font-medium text-primary-foreground"
+            className="mt-7 inline-flex rounded-[5px] bg-primary px-6 py-3 text-sm font-bold text-primary-foreground"
           >
             Explorar NFTs
           </Link>
         </section>
       ) : (
-        <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="mt-8 grid gap-8 xl:grid-cols-[minmax(0,1fr)_360px]">
           <section className="min-w-0">
-            <div className="hidden border-b border-border pb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground lg:grid lg:grid-cols-[minmax(280px,1fr)_140px_180px_130px] lg:gap-5">
-              <span>Produto</span>
+            <div className="hidden border-b border-border pb-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground lg:grid lg:grid-cols-[minmax(280px,1fr)_130px_170px_120px] lg:gap-5">
+              <span>NFT</span>
               <span>Preço</span>
-              <span>Quantidade</span>
+              <span>Edições</span>
               <span className="text-right">
                 Total
               </span>
             </div>
 
-            <div>
+            <div className="space-y-4 lg:space-y-0">
               {items.map(({ nft, quantity }) => {
                 const itemTotal = (
                   Number(nft.priceEth) * quantity
@@ -120,7 +138,7 @@ export function CartPage() {
                 return (
                   <article
                     key={nft.id}
-                    className="grid gap-5 border-b border-border py-6 lg:grid-cols-[minmax(280px,1fr)_140px_180px_130px] lg:items-center"
+                    className="rounded-[12px] bg-card p-4 lg:grid lg:grid-cols-[minmax(280px,1fr)_130px_170px_120px] lg:items-center lg:gap-5 lg:rounded-none lg:border-b lg:border-border lg:bg-transparent lg:px-0 lg:py-6"
                   >
                     <div className="flex min-w-0 gap-4">
                       <Link
@@ -133,12 +151,14 @@ export function CartPage() {
                         <img
                           src={nft.imageUrl}
                           alt={nft.name}
-                          className="h-24 w-24 object-cover sm:h-28 sm:w-28"
+                          width={112}
+                          height={112}
+                          className="size-24 rounded-[10px] object-cover sm:size-28"
                         />
                       </Link>
 
-                      <div className="min-w-0">
-                        <p className="text-xs uppercase tracking-wider text-primary">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-primary">
                           {nft.collection}
                         </p>
 
@@ -147,9 +167,9 @@ export function CartPage() {
                           params={{
                             nftId: nft.id,
                           }}
-                          className="mt-1 block"
+                          className="mt-2 block"
                         >
-                          <h2 className="text-base font-semibold sm:text-lg">
+                          <h2 className="text-sm font-bold text-foreground sm:text-base">
                             {nft.name}
                           </h2>
                         </Link>
@@ -159,39 +179,18 @@ export function CartPage() {
                           edições disponíveis
                         </p>
 
-                        <button
-                          type="button"
-                          onClick={() =>
-                            removeCartItem.mutate(
-                              nft.id,
-                            )
-                          }
-                          disabled={
-                            removeCartItem.isPending
-                          }
-                          className="mt-3 text-sm text-primary disabled:opacity-50 lg:hidden"
-                        >
-                          Remover
-                        </button>
+                        <p className="mt-3 text-sm font-bold text-primary lg:hidden">
+                          {nft.priceEth} ETH
+                        </p>
                       </div>
                     </div>
 
-                    <div>
-                      <span className="text-xs text-muted-foreground lg:hidden">
-                        Preço
-                      </span>
+                    <p className="hidden text-sm font-bold text-primary lg:block">
+                      {nft.priceEth} ETH
+                    </p>
 
-                      <p className="mt-1 font-medium text-primary lg:mt-0">
-                        {nft.priceEth} ETH
-                      </p>
-                    </div>
-
-                    <div>
-                      <span className="text-xs text-muted-foreground lg:hidden">
-                        Quantidade
-                      </span>
-
-                      <div className="mt-2 flex items-center gap-2 lg:mt-0">
+                    <div className="mt-4 flex items-center justify-between gap-4 lg:mt-0 lg:block">
+                      <div className="flex items-center">
                         <button
                           type="button"
                           aria-label={`Diminuir quantidade de ${nft.name}`}
@@ -206,12 +205,12 @@ export function CartPage() {
                                 quantity - 1,
                             })
                           }
-                          className="flex h-10 w-10 items-center justify-center border border-border text-lg transition-colors hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                          className="flex size-9 items-center justify-center rounded-l-[5px] border border-border text-base hover:border-primary hover:text-primary disabled:opacity-40"
                         >
                           −
                         </button>
 
-                        <span className="flex h-10 min-w-12 items-center justify-center border border-border px-3 text-center font-medium">
+                        <span className="flex h-9 min-w-10 items-center justify-center border-y border-border px-2 text-sm font-bold">
                           {quantity}
                         </span>
 
@@ -230,22 +229,10 @@ export function CartPage() {
                                 quantity + 1,
                             })
                           }
-                          className="flex h-10 w-10 items-center justify-center border border-border text-lg transition-colors hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                          className="flex size-9 items-center justify-center rounded-r-[5px] border border-border text-base hover:border-primary hover:text-primary disabled:opacity-40"
                         >
                           +
                         </button>
-                      </div>
-                    </div>
-
-                    <div className="flex items-end justify-between gap-4 lg:block lg:text-right">
-                      <div>
-                        <span className="text-xs text-muted-foreground lg:hidden">
-                          Total
-                        </span>
-
-                        <p className="mt-1 font-semibold lg:mt-0">
-                          {itemTotal} ETH
-                        </p>
                       </div>
 
                       <button
@@ -258,10 +245,20 @@ export function CartPage() {
                         disabled={
                           removeCartItem.isPending
                         }
-                        className="hidden text-sm text-primary disabled:opacity-50 lg:mt-3 lg:inline-block"
+                        className="text-xs text-primary disabled:opacity-50 lg:mt-3"
                       >
                         Remover
                       </button>
+                    </div>
+
+                    <div className="mt-4 flex items-center justify-between border-t border-border pt-4 lg:mt-0 lg:block lg:border-0 lg:pt-0 lg:text-right">
+                      <span className="text-xs text-muted-foreground lg:hidden">
+                        Total
+                      </span>
+
+                      <p className="text-sm font-bold text-foreground">
+                        {itemTotal} ETH
+                      </p>
                     </div>
                   </article>
                 )
@@ -270,14 +267,14 @@ export function CartPage() {
 
             <Link
               to="/"
-              className="mt-6 inline-block text-sm font-medium text-primary"
+              className="mt-6 inline-flex text-xs font-bold text-primary"
             >
-              Continuar comprando
+              ← Continuar comprando
             </Link>
           </section>
 
-          <aside className="h-fit border border-border bg-card p-5 sm:p-6 xl:sticky xl:top-6">
-            <h2 className="text-xl font-semibold">
+          <aside className="h-fit rounded-[12px] border border-border bg-card p-5 sm:p-6 xl:sticky xl:top-6">
+            <h2 className="text-lg font-bold text-foreground">
               Resumo do pedido
             </h2>
 
@@ -287,12 +284,12 @@ export function CartPage() {
             >
               <label
                 htmlFor="coupon"
-                className="mb-2 block text-sm font-medium"
+                className="mb-2 block text-xs font-bold"
               >
                 Cupom de desconto
               </label>
 
-              <div className="flex gap-2">
+              <div className="flex">
                 <input
                   id="coupon"
                   type="text"
@@ -303,12 +300,12 @@ export function CartPage() {
                     )
                   }
                   placeholder="Código do cupom"
-                  className="min-w-0 flex-1 border border-border bg-background px-3 py-2 outline-none transition-colors focus:border-primary"
+                  className="min-w-0 flex-1 rounded-l-[5px] border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary"
                 />
 
                 <button
                   type="submit"
-                  className="bg-primary px-4 py-2 font-medium text-primary-foreground"
+                  className="rounded-r-[5px] bg-primary px-4 text-xs font-bold text-primary-foreground"
                 >
                   Aplicar
                 </button>
@@ -317,7 +314,7 @@ export function CartPage() {
 
             {appliedCoupon &&
               quoteQuery.isSuccess && (
-                <div className="mt-3 flex items-center justify-between gap-3 text-sm">
+                <div className="mt-3 flex items-center justify-between gap-3 text-xs">
                   <span className="text-primary">
                     Cupom{' '}
                     {quoteQuery.data.coupon}{' '}
@@ -327,7 +324,7 @@ export function CartPage() {
                   <button
                     type="button"
                     onClick={handleRemoveCoupon}
-                    className="text-muted-foreground transition-colors hover:text-primary"
+                    className="text-muted-foreground hover:text-primary"
                   >
                     Remover
                   </button>
@@ -353,50 +350,22 @@ export function CartPage() {
               </p>
             ) : quoteQuery.isSuccess ? (
               <dl className="mt-8 space-y-4 text-sm">
-                <div className="flex justify-between gap-4">
-                  <dt className="text-muted-foreground">
-                    Subtotal
-                  </dt>
+                <SummaryRow
+                  label="Subtotal"
+                  value={`${quoteQuery.data.subtotalEth} ETH`}
+                />
 
-                  <dd>
-                    {
-                      quoteQuery.data
-                        .subtotalEth
-                    }{' '}
-                    ETH
-                  </dd>
-                </div>
+                <SummaryRow
+                  label="Desconto"
+                  value={`− ${quoteQuery.data.discountEth} ETH`}
+                />
 
-                <div className="flex justify-between gap-4">
-                  <dt className="text-muted-foreground">
-                    Desconto
-                  </dt>
+                <SummaryRow
+                  label="Taxa de rede"
+                  value={`${quoteQuery.data.networkFeeEth} ETH`}
+                />
 
-                  <dd>
-                    −{' '}
-                    {
-                      quoteQuery.data
-                        .discountEth
-                    }{' '}
-                    ETH
-                  </dd>
-                </div>
-
-                <div className="flex justify-between gap-4">
-                  <dt className="text-muted-foreground">
-                    Taxa de rede
-                  </dt>
-
-                  <dd>
-                    {
-                      quoteQuery.data
-                        .networkFeeEth
-                    }{' '}
-                    ETH
-                  </dd>
-                </div>
-
-                <div className="flex justify-between gap-4 border-t border-border pt-5 text-base font-semibold">
+                <div className="flex justify-between gap-4 border-t border-border pt-5 text-base font-bold">
                   <dt>Total</dt>
 
                   <dd className="text-primary">
@@ -411,14 +380,14 @@ export function CartPage() {
               <>
                 <Link
                   to="/checkout"
-                  className="mt-6 block w-full bg-primary px-5 py-3 text-center font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                  className="mt-6 block w-full rounded-[5px] bg-primary px-5 py-3 text-center text-sm font-bold text-primary-foreground"
                 >
                   Conectar e finalizar
                 </Link>
 
-                <p className="mt-3 text-center text-xs leading-5 text-muted-foreground">
-                  A cotação será revalidada antes
-                  da confirmação da compra.
+                <p className="mt-3 text-center text-[10px] leading-4 text-muted-foreground">
+                  A cotação será revalidada antes da
+                  confirmação da compra.
                 </p>
               </>
             )}
@@ -426,5 +395,25 @@ export function CartPage() {
         </div>
       )}
     </main>
+  )
+}
+
+interface SummaryRowProps {
+  label: string
+  value: string
+}
+
+function SummaryRow({
+  label,
+  value,
+}: SummaryRowProps) {
+  return (
+    <div className="flex justify-between gap-4">
+      <dt className="text-muted-foreground">
+        {label}
+      </dt>
+
+      <dd>{value}</dd>
+    </div>
   )
 }
