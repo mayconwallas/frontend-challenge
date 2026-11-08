@@ -184,7 +184,7 @@ test.describe('Socket realtime updates', () => {
 
     await page
       .getByRole('link', {
-        name: /Kurio - página inicial/i,
+        name: /Kurio, página inicial/i,
       })
       .click()
 

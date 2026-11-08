@@ -107,16 +107,23 @@ export function AppHeader() {
 
           {session ? (
             <>
-              <Link
-                to="/profile"
-                aria-label="Abrir meu perfil"
-                className="flex size-8 items-center justify-center rounded-full border border-border text-xs font-bold text-primary transition-colors hover:border-primary lg:hidden"
+              <button
+                type="button"
+                aria-label="Sair"
+                title="Sair"
+                onClick={handleLogout}
+                disabled={
+                  logoutMutation.isPending
+                }
+                className="flex size-8 items-center justify-center rounded-full border border-border text-xs font-bold text-primary transition-colors hover:border-primary disabled:opacity-50 lg:hidden"
               >
-                {session.user.name
-                  .trim()
-                  .charAt(0)
-                  .toUpperCase()}
-              </Link>
+                {logoutMutation.isPending
+                  ? '…'
+                  : session.user.name
+                      .trim()
+                      .charAt(0)
+                      .toUpperCase()}
+              </button>
 
               <Link
                 to="/profile"

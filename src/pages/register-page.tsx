@@ -9,28 +9,46 @@ import { useRegister } from '@/features/auth'
 
 export function RegisterPage() {
   const navigate = useNavigate()
-  const registerMutation = useRegister()
+  const registerMutation =
+    useRegister()
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const [name, setName] =
+    useState('')
+
+  const [email, setEmail] =
+    useState('')
+
   const [password, setPassword] =
     useState('')
+
   const [
     confirmPassword,
     setConfirmPassword,
   ] = useState('')
-  const [showPassword, setShowPassword] =
-    useState(false)
-  const [validationError, setValidationError] =
-    useState<string | null>(null)
+
+  const [
+    showPassword,
+    setShowPassword,
+  ] = useState(false)
+
+  const [
+    validationError,
+    setValidationError,
+  ] = useState<string | null>(
+    null,
+  )
 
   async function handleSubmit(
     event: FormEvent<HTMLFormElement>,
   ) {
     event.preventDefault()
+
     setValidationError(null)
 
-    if (password !== confirmPassword) {
+    if (
+      password !==
+      confirmPassword
+    ) {
       setValidationError(
         'As senhas informadas não correspondem.',
       )
@@ -62,54 +80,45 @@ export function RegisterPage() {
   }
 
   return (
-    <main className="relative flex min-h-[calc(100vh-72px)] w-full items-center justify-center overflow-hidden px-4 py-12 sm:px-6">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-primary/5"
-      />
-
-      <div
-        aria-hidden="true"
-        className="absolute left-[8%] top-[12%] h-52 w-52 border border-primary/20"
-      />
-
-      <div
-        aria-hidden="true"
-        className="absolute bottom-[10%] right-[8%] h-40 w-40 border border-border"
-      />
-
-      <section className="relative z-10 w-full max-w-md border border-border bg-background p-6 shadow-2xl sm:p-8">
+    <main className="flex min-h-[calc(100vh-56px)] items-center justify-center px-4 py-8 lg:min-h-[calc(100vh-72px)] lg:bg-background/95">
+      <section className="w-full max-w-[370px] rounded-[22px] bg-[#100a08] px-6 pb-8 pt-12 sm:px-8 lg:max-w-[430px] lg:rounded-[4px] lg:border lg:border-border lg:px-10 lg:pb-8 lg:pt-6 lg:shadow-2xl">
         <div className="text-center">
           <Link
             to="/"
-            aria-label="Kurio - página inicial"
-            className="inline-block text-2xl font-bold tracking-[0.25em] text-primary"
+            aria-label="Kurio, página inicial"
+            className="inline-block text-2xl font-bold tracking-[0.24em] text-foreground lg:hidden"
           >
             KURIO
           </Link>
 
-          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            Novo colecionador
-          </p>
+          <div className="hidden items-center justify-end lg:flex">
+            <Link
+              to="/"
+              aria-label="Fechar cadastro"
+              className="flex size-7 items-center justify-center text-primary"
+            >
+              ×
+            </Link>
+          </div>
 
-          <h1 className="mt-3 text-3xl font-semibold">
-            Criar conta
+          <h1 className="mt-14 text-base font-bold text-foreground lg:mt-0">
+            Criar perfil de colecionador
           </h1>
 
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            Crie sua conta para colecionar NFTs e
-            gerenciar suas carteiras.
+          <p className="mt-3 hidden text-[10px] leading-5 text-muted-foreground lg:block">
+            Crie seu perfil para colecionar NFTs e
+            conecte uma carteira.
           </p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="mt-8 space-y-5"
+          className="mt-8 space-y-3 lg:mt-5"
         >
           <div>
             <label
               htmlFor="name"
-              className="mb-2 block text-sm font-medium"
+              className="sr-only"
             >
               Nome
             </label>
@@ -121,16 +130,19 @@ export function RegisterPage() {
               autoComplete="name"
               value={name}
               onChange={(event) =>
-                setName(event.target.value)
+                setName(
+                  event.target.value,
+                )
               }
-              className="w-full border border-border bg-background px-4 py-3 outline-none transition-colors focus:border-primary"
+              placeholder="Nome de usuário"
+              className="h-11 w-full rounded-[6px] border border-border bg-transparent px-4 text-xs text-foreground outline-none placeholder:text-[#b79267] focus:border-primary"
             />
           </div>
 
           <div>
             <label
               htmlFor="register-email"
-              className="mb-2 block text-sm font-medium"
+              className="sr-only"
             >
               E-mail
             </label>
@@ -142,16 +154,19 @@ export function RegisterPage() {
               autoComplete="email"
               value={email}
               onChange={(event) =>
-                setEmail(event.target.value)
+                setEmail(
+                  event.target.value,
+                )
               }
-              className="w-full border border-border bg-background px-4 py-3 outline-none transition-colors focus:border-primary"
+              placeholder="Digite seu e-mail"
+              className="h-11 w-full rounded-[6px] border border-border bg-transparent px-4 text-xs text-foreground outline-none placeholder:text-[#b79267] focus:border-primary"
             />
           </div>
 
           <div>
             <label
               htmlFor="register-password"
-              className="mb-2 block text-sm font-medium"
+              className="sr-only"
             >
               Senha
             </label>
@@ -169,9 +184,12 @@ export function RegisterPage() {
                 autoComplete="new-password"
                 value={password}
                 onChange={(event) =>
-                  setPassword(event.target.value)
+                  setPassword(
+                    event.target.value,
+                  )
                 }
-                className="w-full border border-border bg-background px-4 py-3 pr-20 outline-none transition-colors focus:border-primary"
+                placeholder="Senha"
+                className="h-11 w-full rounded-[6px] border border-border bg-transparent px-4 pr-12 text-xs text-foreground outline-none placeholder:text-[#b79267] focus:border-primary"
               />
 
               <button
@@ -181,57 +199,68 @@ export function RegisterPage() {
                     ? 'Ocultar conteúdo'
                     : 'Exibir conteúdo'
                 }
-                aria-pressed={showPassword}
+                aria-pressed={
+                  showPassword
+                }
                 onClick={() =>
                   setShowPassword(
-                    (current) => !current,
+                    (current) =>
+                      !current,
                   )
                 }
-                className="absolute inset-y-0 right-0 px-4 text-xs font-medium text-primary"
+                className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-primary"
               >
                 {showPassword
-                  ? 'Ocultar'
-                  : 'Mostrar'}
+                  ? '○'
+                  : '◉'}
               </button>
             </div>
-
-            <p className="mt-2 text-xs text-muted-foreground">
-              Use pelo menos 8 caracteres.
-            </p>
           </div>
 
           <div>
             <label
               htmlFor="confirm-password"
-              className="mb-2 block text-sm font-medium"
+              className="sr-only"
             >
               Confirmar senha
             </label>
 
-            <input
-              id="confirm-password"
-              type={
-                showPassword
-                  ? 'text'
-                  : 'password'
-              }
-              required
-              minLength={8}
-              autoComplete="new-password"
-              value={confirmPassword}
-              onChange={(event) =>
-                setConfirmPassword(
-                  event.target.value,
-                )
-              }
-              className="w-full border border-border bg-background px-4 py-3 outline-none transition-colors focus:border-primary"
-            />
+            <div className="relative">
+              <input
+                id="confirm-password"
+                type={
+                  showPassword
+                    ? 'text'
+                    : 'password'
+                }
+                required
+                minLength={8}
+                autoComplete="new-password"
+                value={
+                  confirmPassword
+                }
+                onChange={(event) =>
+                  setConfirmPassword(
+                    event.target.value,
+                  )
+                }
+                placeholder="Confirmar senha"
+                className="h-11 w-full rounded-[6px] border border-border bg-transparent px-4 pr-12 text-xs text-foreground outline-none placeholder:text-[#b79267] focus:border-primary"
+              />
+
+              <span
+                aria-hidden="true"
+                className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-primary"
+              >
+                ◉
+              </span>
+            </div>
           </div>
 
           {validationError && (
             <p
               role="alert"
-              className="border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-500"
+              className="rounded-[5px] border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs text-red-500"
             >
               {validationError}
             </p>
@@ -240,7 +269,7 @@ export function RegisterPage() {
           {registerMutation.isError && (
             <p
               role="alert"
-              className="border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-500"
+              className="rounded-[5px] border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs text-red-500"
             >
               Não foi possível criar sua conta.
             </p>
@@ -248,48 +277,57 @@ export function RegisterPage() {
 
           <button
             type="submit"
-            disabled={registerMutation.isPending}
-            className="w-full bg-primary px-4 py-3 font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+            aria-label="Criar conta"
+            disabled={
+              registerMutation.isPending
+            }
+            className="mt-6 h-[52px] w-full rounded-[7px] bg-[#dd914c] text-sm font-bold text-[#140d0a] transition-opacity hover:opacity-90 disabled:opacity-50 lg:mt-4 lg:h-10 lg:text-xs"
           >
             {registerMutation.isPending
-              ? 'Criando conta...'
-              : 'Criar conta'}
+              ? 'Criando perfil...'
+              : 'Criar perfil'}
           </button>
         </form>
 
-        <div className="my-7 flex items-center gap-4">
+        <div className="my-8 flex items-center gap-3 lg:my-5">
           <div className="h-px flex-1 bg-border" />
 
-          <span className="text-xs uppercase tracking-wider text-muted-foreground">
-            ou continue com
+          <span className="whitespace-nowrap text-[10px] text-foreground">
+            Ou continue com
           </span>
 
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-3">
           <button
             type="button"
-            className="border border-border px-4 py-3 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
+            className="flex h-9 w-full items-center justify-center gap-3 rounded-[4px] border border-border text-[11px] text-[#c9aa82] transition-colors hover:border-primary"
           >
-            Google
+            <span className="font-bold text-[#4285f4]">
+              G
+            </span>
+            Continuar com Google
           </button>
 
           <button
             type="button"
-            className="border border-border px-4 py-3 text-sm font-medium transition-colors hover:border-primary hover:text-primary"
+            className="flex h-9 w-full items-center justify-center gap-3 rounded-[4px] border border-border text-[11px] text-[#c9aa82] transition-colors hover:border-primary"
           >
-            Facebook
+            <span className="text-base font-bold text-[#517bbd]">
+              f
+            </span>
+            Continuar com Facebook
           </button>
         </div>
 
-        <p className="mt-7 text-center text-sm text-muted-foreground">
-          Já possui uma conta?{' '}
+        <p className="mt-9 text-center text-xs text-[#c9aa82] lg:mt-6 lg:text-[10px]">
+          Já tem uma conta?{' '}
           <Link
             to="/login"
-            className="font-medium text-primary hover:underline"
+            className="transition-colors hover:text-primary"
           >
-            Entrar
+            Entre
           </Link>
         </p>
       </section>
