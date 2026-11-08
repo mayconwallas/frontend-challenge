@@ -35,14 +35,15 @@ export function CatalogToolbar({
   onSortChange,
 }: CatalogToolbarProps) {
   return (
-    <div className="mb-8 hidden items-center justify-between gap-6 lg:flex">
+    <>
       <div
         role="tablist"
         aria-label="Categorias do catálogo"
-        className="flex items-center gap-5"
+        className="flex items-center justify-between gap-2 overflow-x-auto border-b border-border lg:hidden"
       >
         {tabs.map((item) => {
-          const isActive = tab === item.value
+          const isActive =
+            tab === item.value
 
           return (
             <button
@@ -50,11 +51,13 @@ export function CatalogToolbar({
               type="button"
               role="tab"
               aria-selected={isActive}
-              onClick={() => onTabChange(item.value)}
+              onClick={() =>
+                onTabChange(item.value)
+              }
               className={
                 isActive
-                  ? 'border-b-2 border-primary pb-2 text-[15px] font-medium text-accent'
-                  : 'border-b-2 border-transparent pb-2 text-[15px] font-medium text-foreground'
+                  ? 'shrink-0 border-b-2 border-primary px-0.5 pb-2 text-[11px] font-bold text-primary'
+                  : 'shrink-0 border-b-2 border-transparent px-0.5 pb-2 text-[11px] text-foreground'
               }
             >
               {item.label}
@@ -63,30 +66,64 @@ export function CatalogToolbar({
         })}
       </div>
 
-      <label className="flex items-center gap-1 text-[15px] text-foreground">
-        <span>Ordenar por:</span>
-
-        <select
-          aria-label="Ordenar NFTs"
-          value={sort}
-          onChange={(event) =>
-            onSortChange(event.target.value as NftSort)
-          }
-          className="bg-transparent text-[15px] text-foreground outline-none"
+      <div className="mb-8 hidden items-center justify-between gap-6 lg:flex">
+        <div
+          role="tablist"
+          aria-label="Categorias do catálogo"
+          className="flex items-center gap-5"
         >
-          <option value="recent">
-            Listados recentemente
-          </option>
+          {tabs.map((item) => {
+            const isActive =
+              tab === item.value
 
-          <option value="price-asc">
-            Menor preço
-          </option>
+            return (
+              <button
+                key={item.value}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() =>
+                  onTabChange(item.value)
+                }
+                className={
+                  isActive
+                    ? 'border-b-2 border-primary pb-2 text-[15px] font-medium text-accent'
+                    : 'border-b-2 border-transparent pb-2 text-[15px] font-medium text-foreground'
+                }
+              >
+                {item.label}
+              </button>
+            )
+          })}
+        </div>
 
-          <option value="price-desc">
-            Maior preço
-          </option>
-        </select>
-      </label>
-    </div>
+        <label className="flex items-center gap-1 text-[15px] text-foreground">
+          <span>Ordenar por:</span>
+
+          <select
+            aria-label="Ordenar NFTs"
+            value={sort}
+            onChange={(event) =>
+              onSortChange(
+                event.target.value as NftSort,
+              )
+            }
+            className="bg-transparent text-[15px] text-foreground outline-none"
+          >
+            <option value="recent">
+              Listados recentemente
+            </option>
+
+            <option value="price-asc">
+              Menor preço
+            </option>
+
+            <option value="price-desc">
+              Maior preço
+            </option>
+          </select>
+        </label>
+      </div>
+    </>
   )
 }

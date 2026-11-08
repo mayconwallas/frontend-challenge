@@ -12,6 +12,7 @@ import {
   useNfts,
 } from '@/features/catalog'
 import { Route } from '@/routes'
+import { MobileHomeHero } from '@/components/home/mobile-home-hero'
 
 const PAGE_SIZE = 3
 
@@ -165,6 +166,9 @@ export function HomePage() {
   return (
     <>
       <PageContainer>
+        <MobileHomeHero
+        onExplore={handleExplore}
+      />
         <Section className="pb-8 pt-7 md:pb-10 lg:pb-12 lg:pt-10">
           <div className="overflow-hidden lg:grid lg:min-h-[440px] lg:grid-cols-[minmax(0,1fr)_390px] lg:items-center lg:gap-16">
             <div className="flex flex-col justify-center py-8 lg:py-10">
@@ -228,7 +232,7 @@ export function HomePage() {
         <Section
           id="marketplace"
           aria-label="Marketplace"
-          className="pt-8 lg:pt-10"
+          className="pb-8 pt-6 lg:py-16"
         >
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8 xl:gap-10">
             <CatalogSidebar
