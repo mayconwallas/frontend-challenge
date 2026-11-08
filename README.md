@@ -1,6 +1,8 @@
-# Kurio NFT Marketplace
+# Kurio - NFT Marketplace
 
-Frontend de um marketplace de NFTs desenvolvido como desafio técnico, com foco em arquitetura frontend, experiência responsiva, integração REST simulada, gerenciamento de estado assíncrono, atualizações em tempo real e testes end-to-end.
+Marketplace de NFTs desenvolvido como solução para o Frontend Challenge da Jungle Gaming.
+
+A aplicação implementa descoberta e detalhamento de NFTs, favoritos, carrinho, cotação, checkout, pedidos, autenticação, perfil de colecionador, carteiras digitais e atualizações em tempo real, utilizando APIs simuladas para permitir execução completa sem dependências externas.
 
 ## Demo
 
@@ -8,250 +10,144 @@ Produção:
 
 https://frontend-challenge-theta-inky.vercel.app/
 
-### Usuário de demonstração
+Repositório:
 
-```text
-E-mail: collector@kurio.com
-Senha: Kurio123!
-```
-
-Também é possível criar uma nova conta pela própria aplicação.
-
----
+https://github.com/mayconwallas/frontend-challenge
 
 ## Stack
 
-- React
+- React 19
 - TypeScript
 - Vite
 - TanStack Router
 - TanStack Query
 - Axios
-- Tailwind CSS
-- shadcn/ui
-- Mock Service Worker (MSW)
+- REST
 - Socket.IO Client
+- Tailwind CSS
+- Base UI / componentes UI
+- MSW
 - Playwright
+- Lighthouse CI
 - ESLint
-
----
 
 ## Funcionalidades
 
 ### Marketplace
 
 - catálogo de NFTs;
-- filtros por coleção e rede;
-- filtros combináveis;
 - ordenação;
-- paginação;
+- filtros por categoria/rede;
 - abas de catálogo;
-- estados de loading, erro e vazio;
-- layout responsivo para mobile, tablet e desktop.
+- paginação;
+- estado dos filtros integrado ao Router;
+- layout responsivo.
 
-### Detalhe do NFT
+### NFT
 
-- detalhes do ativo;
-- coleção;
-- criador;
-- blockchain;
-- preço;
-- disponibilidade;
-- galeria;
+- rota individual por NFT;
+- acesso direto pelo identificador;
+- estado de carregamento;
+- tratamento de NFT inexistente;
 - favoritos;
-- stepper de quantidade;
-- limite baseado nas edições disponíveis;
-- ação de compra;
-- adição ao carrinho;
-- abas de detalhes e avaliações;
-- estado de NFT não encontrado.
+- quantidade;
+- preço em ETH;
+- inclusão no carrinho;
+- atributos e informações do NFT.
 
 ### Favoritos
 
 - adicionar NFT aos favoritos;
 - remover dos favoritos;
-- persistência entre páginas.
+- persistência simulada;
+- sincronização entre catálogo e detalhe.
 
 ### Carrinho
 
 - adicionar NFT;
+- remover NFT;
 - alterar quantidade;
-- impedir quantidade inferior a 1;
-- respeitar disponibilidade máxima;
-- remover item;
 - persistência após reload;
-- subtotal por item;
-- resumo do pedido;
-- cupom;
-- desconto;
-- taxa de rede;
-- total.
-
-### Cupons
-
-Exemplos utilizados pelo ambiente mock:
-
-```text
-KURIO10
-KURIOEXPIRED
-```
-
-O fluxo possui cenários para:
-
-- cupom válido;
+- cálculo de subtotal;
+- integração com cotação;
+- cupom de desconto;
 - cupom inválido;
 - cupom expirado.
 
 ### Autenticação
 
 - login;
-- logout;
 - cadastro;
+- validação de credenciais;
+- validação de senha;
 - confirmação de senha;
-- mostrar e ocultar senha;
-- persistência da sessão;
-- tratamento de credenciais inválidas;
-- prevenção de cadastro inconsistente.
+- sessão persistente;
+- logout.
 
-As senhas de usuários criados pelo mock não são persistidas em texto puro. O mock armazena somente `passwordHash`.
+### Checkout e pedidos
 
-> Observação: SHA-256 neste projeto é utilizado apenas para evitar armazenamento da senha em texto puro dentro do ambiente frontend simulado. Em um backend real, o armazenamento de credenciais deve utilizar algoritmos apropriados para senhas, como Argon2id, scrypt ou bcrypt, com salt e parâmetros de custo adequados.
+- dados do colecionador;
+- seleção de carteira;
+- carteira manual;
+- seleção de rede;
+- criação do pedido;
+- idempotency key;
+- pedido pendente;
+- confirmação do pedido;
+- recusa do pedido;
+- persistência do estado do pedido.
 
-### Perfil do colecionador
+### Perfil
 
-- consulta do perfil;
-- nome de exibição;
-- nome de usuário;
+- edição do nome de exibição;
+- username;
 - e-mail;
 - ENS;
-- apelido da carteira;
+- apelido de carteira;
 - avatar;
-- edição e persistência;
-- sincronização do nome do perfil com a sessão;
-- alteração de senha.
+- alteração de senha;
+- persistência dos dados;
+- sincronização com a sessão.
 
 ### Carteiras
 
-- cadastro de carteiras;
+- cadastro de carteira;
+- Ethereum;
+- Polygon;
+- Solana;
+- WalletConnect;
+- MetaMask;
+- Coinbase Wallet;
+- ENS para Ethereum;
 - carteira principal;
 - carteiras secundárias;
-- definição de nova carteira principal;
+- alteração da carteira principal;
 - remoção;
 - persistência;
-- integração com o checkout.
+- uso da carteira principal no checkout.
 
-Redes suportadas:
+### Tempo real
 
-```text
-Ethereum
-Polygon
-Solana
-```
+A aplicação utiliza `socket.io-client` para atualizações em tempo real.
 
-Provedores apresentados:
+Eventos exercitados:
 
-```text
-WalletConnect
-MetaMask
-Coinbase Wallet
-```
+- `nft.updated`
+- `order.updated`
 
-O campo ENS é utilizado somente quando aplicável ao fluxo Ethereum.
-
-### Checkout
-
-- dados do colecionador;
-- seleção automática da carteira principal;
-- escolha entre carteiras cadastradas;
-- endereço e rede herdados da carteira;
-- opção de utilizar outra carteira manualmente;
-- resumo dos NFTs;
-- criação do pedido.
-
-### Pedidos
-
-Estados implementados:
-
-```text
-pending
-confirmed
-rejected
-```
-
-O fluxo inclui:
-
-- criação do pedido;
-- snapshot dos itens comprados;
-- persistência após reload;
-- confirmação de pagamento;
-- rejeição;
-- `transactionId`;
-- limpeza do carrinho após confirmação;
-- preservação do carrinho após rejeição;
-- idempotência.
-
-### Atualizações em tempo real
-
-Socket.IO Client é integrado ao TanStack Query.
-
-Eventos tratados:
-
-```text
-nft.updated
-order.updated
-```
-
-Os eventos atualizam o cache da aplicação sem exigir reload da página.
-
-O lifecycle do socket também evita duplicação de listeners durante navegação SPA.
-
----
-
-## Mock API
-
-O backend do desafio é simulado com MSW.
-
-A camada mock cobre recursos como:
-
-```text
-/api/auth
-/api/nfts
-/api/cart
-/api/checkout
-/api/orders
-/api/profile
-/api/wallets
-/api/favorites
-```
-
-O MSW também é habilitado no build publicado para permitir que a demonstração na Vercel funcione sem backend externo.
-
----
-
-## Persistência
-
-Como o projeto funciona sem backend real, determinados estados são persistidos no `localStorage`, incluindo:
-
-- sessão;
-- usuários mockados;
-- perfil;
-- carteiras;
-- favoritos;
-- carrinho;
-- pedidos.
-
-Esses dados são isolados por origem do navegador. Por isso, contas criadas em `localhost` não aparecem automaticamente no domínio publicado na Vercel.
-
----
+A integração atualiza os dados mantidos pelo TanStack Query e possui cobertura automatizada para evitar duplicação de listeners.
 
 ## Arquitetura
 
-O projeto utiliza organização baseada em features.
+O projeto utiliza organização orientada a features.
+
+Estrutura principal:
 
 ```text
 src/
-├── app/
 ├── components/
+│   ├── layout/
+│   └── ui/
 ├── features/
 │   ├── auth/
 │   ├── cart/
@@ -262,91 +158,107 @@ src/
 │   ├── profile/
 │   └── wallets/
 ├── mocks/
-│   ├── fixtures/
-│   ├── handlers/
-│   └── state/
 ├── pages/
-├── routes/
-├── services/
-│   ├── api/
-│   └── socket/
-└── types/
+└── routes/
 ```
 
-A separação busca manter:
+Cada feature concentra suas responsabilidades de domínio, incluindo tipos, hooks, queries, mutations e integração com a camada de dados.
 
-```text
-UI
-↓
-hooks / TanStack Query
-↓
-services
-↓
-HTTP
-↓
-MSW
-↓
-estado mockado
-```
-
-Os eventos em tempo real seguem:
-
-```text
-Socket.IO
-↓
-socket query bridge
-↓
-TanStack Query
-↓
-UI
-```
-
----
+Mais detalhes estão em `ARCHITECTURE.md`.
 
 ## Rotas principais
 
 ```text
-/                   Marketplace
-/login              Login
-/register           Cadastro
-/nft/:nftId         Detalhe do NFT
-/cart                Carrinho
-/checkout            Pagamento
-/order/:orderId      Pedido
-/profile             Perfil
-/profile/wallets     Carteiras
+/                       Home / Marketplace
+/nft/$nftId             Detalhe do NFT
+/cart                    Carrinho
+/checkout                Pagamento
+/order/$orderId          Pedido
+/login                   Login
+/register                Cadastro
+/profile                 Perfil
+/profile/wallets         Carteiras
 ```
 
-O projeto utiliza file-based routing com TanStack Router.
+O roteamento é implementado com TanStack Router.
 
----
+## REST e Axios
 
-## Executando localmente
+Axios é utilizado como cliente HTTP da aplicação.
 
-### Requisitos
+Os principais recursos simulados abrangem:
 
-- Node.js
-- npm
+```text
+Session / Authentication
+NFTs
+Favorites
+Cart
+Checkout Quote
+Orders
+Collector Profile
+Wallets
+```
 
-### Instalação
+A camada REST é consumida por hooks e mutations integrados ao TanStack Query.
+
+## TanStack Query
+
+TanStack Query é responsável pelo estado remoto da aplicação.
+
+A solução utiliza:
+
+- queries;
+- mutations;
+- query keys;
+- invalidação;
+- atualização de cache;
+- sincronização entre telas;
+- integração com eventos Socket.IO.
+
+## MSW
+
+Mock Service Worker é utilizado para simular a API da aplicação no nível da rede.
+
+Configuração do worker:
+
+```text
+public/mockServiceWorker.js
+```
+
+O `package.json` configura:
+
+```json
+{
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}
+```
+
+Isso permite desenvolver e demonstrar a aplicação sem depender de uma API privada ou blockchain real.
+
+Os mocks implementam estado de aplicação suficiente para os fluxos de autenticação, catálogo, favoritos, carrinho, checkout, pedidos, perfil e carteiras.
+
+## Instalação
+
+Pré-requisitos:
+
+- Node.js compatível com Vite 8;
+- npm.
+
+Instale as dependências:
 
 ```bash
 npm install
 ```
 
-### Desenvolvimento
+Inicie o ambiente de desenvolvimento:
 
 ```bash
 npm run dev
 ```
-
-A aplicação ficará disponível no endereço informado pelo Vite, normalmente:
-
-```text
-http://localhost:5173
-```
-
----
 
 ## Build
 
@@ -358,11 +270,26 @@ O comando executa:
 
 ```text
 tsc -b
-+
 vite build
 ```
 
----
+A saída de produção é gerada em:
+
+```text
+dist/
+```
+
+Para visualizar o build local:
+
+```bash
+npm run preview
+```
+
+## Análise do bundle
+
+```bash
+npm run analyze
+```
 
 ## Lint
 
@@ -370,73 +297,183 @@ vite build
 npm run lint
 ```
 
----
-
 ## Testes E2E
 
-A suíte utiliza Playwright.
+A aplicação utiliza Playwright.
+
+Execute toda a suíte:
 
 ```bash
 npm run test:e2e
 ```
 
-Cobertura atual:
+A suíte atual possui:
 
 ```text
 114 testes E2E
 ```
 
-Os testes são executados em três projetos:
+executados nos projetos/viewports configurados para:
 
-```text
-Mobile   390 x 844
-Tablet   768 x 1024
-Desktop  1440 x 900
-```
+- Mobile;
+- Tablet;
+- Desktop.
 
-Principais jornadas cobertas:
+Os testes cobrem, entre outros:
 
 - autenticação;
 - cadastro;
+- logout;
 - sessão;
-- confirmação de senha;
 - catálogo;
 - filtros;
 - ordenação;
 - paginação;
-- favoritos;
 - detalhe do NFT;
+- 404;
+- favoritos;
 - carrinho;
-- quantidade;
 - persistência;
-- cupons;
+- cupom;
 - checkout;
 - pedidos;
-- confirmação e rejeição;
 - perfil;
+- alteração de senha;
 - carteiras;
-- integração carteira/checkout;
 - Socket.IO;
-- prevenção de listeners duplicados;
 - shell responsivo.
 
-Para executar apenas um conjunto:
+Último gate executado durante a preparação da entrega:
 
-```bash
-npx playwright test tests/e2e/auth.spec.ts
+```text
+ESLint: PASS
+TypeScript: PASS
+Vite production build: PASS
+Playwright: 114/114 PASS
 ```
 
-Exemplo:
+### Playwright UI
 
 ```bash
-npx playwright test tests/e2e/orders.spec.ts
+npm run test:e2e:ui
 ```
 
----
+### Relatório
 
-## Qualidade
+```bash
+npm run test:e2e:report
+```
 
-Antes dos principais checkpoints do projeto são executados:
+## Lighthouse
+
+Lighthouse CI está configurado como dependência do projeto.
+
+Executar auditoria completa:
+
+```bash
+npm run lighthouse
+```
+
+Ou separadamente:
+
+```bash
+npm run lighthouse:collect
+npm run lighthouse:assert
+```
+
+O script principal executa primeiro o build de produção:
+
+```text
+npm run build
+lhci autorun
+```
+
+## Responsividade
+
+A interface foi implementada para os três principais contextos avaliados pelo desafio:
+
+```text
+390 px   Mobile
+768 px   Tablet
+1440 px  Desktop
+```
+
+A aplicação possui composições específicas para Mobile e Desktop em partes relevantes da interface, em vez de apenas reduzir proporcionalmente o layout Desktop.
+
+## Acessibilidade
+
+A implementação utiliza, entre outros:
+
+- elementos HTML semânticos;
+- labels de formulário;
+- accessible names;
+- `aria-label`;
+- `aria-current`;
+- `aria-selected`;
+- `aria-pressed`;
+- `role="alert"`;
+- `role="status"`;
+- navegação por links e botões nativos;
+- estados disabled;
+- feedback de erro e sucesso;
+- textos alternativos para imagens relevantes;
+- estilos de foco.
+
+## Persistência simulada
+
+Como a solução é executada integralmente no navegador com API simulada, os principais estados do usuário são mantidos pela infraestrutura de mocks correspondente aos fluxos implementados.
+
+Os testes automatizados verificam persistência após reload para os principais recursos cobertos pelo desafio.
+
+## Deployment
+
+A aplicação está publicada na Vercel:
+
+https://frontend-challenge-theta-inky.vercel.app/
+
+A branch de produção é:
+
+```text
+main
+```
+
+O projeto utiliza configuração de SPA routing para permitir acesso e refresh de rotas do TanStack Router no ambiente de produção.
+
+## Scripts disponíveis
+
+| Script | Função |
+|---|---|
+| `npm run dev` | inicia Vite em desenvolvimento |
+| `npm run build` | executa TypeScript e gera build |
+| `npm run analyze` | gera build em modo de análise |
+| `npm run lint` | executa ESLint |
+| `npm run preview` | executa preview do build |
+| `npm run test:e2e` | executa Playwright |
+| `npm run test:e2e:ui` | abre Playwright UI |
+| `npm run test:e2e:report` | abre relatório Playwright |
+| `npm run lighthouse` | build + Lighthouse CI |
+| `npm run lighthouse:collect` | coleta auditorias |
+| `npm run lighthouse:assert` | valida assertions |
+
+## Decisões técnicas
+
+### API simulada
+
+O desafio não exige integração real com blockchain, extensão de wallet ou gateway de pagamento. Esses recursos são representados por contratos e mocks para tornar a aplicação reproduzível.
+
+### Estado remoto
+
+Dados provenientes da API são tratados como estado remoto e gerenciados pelo TanStack Query, evitando duplicar estado de servidor desnecessariamente em stores globais.
+
+### Routing
+
+TanStack Router é responsável pelas rotas e pelos estados de navegação relevantes ao catálogo.
+
+### E2E como gate de regressão
+
+Os fluxos de negócio possuem cobertura Playwright em diferentes tamanhos de viewport.
+
+Mudanças relevantes foram validadas com:
 
 ```bash
 npm run lint
@@ -444,97 +481,23 @@ npm run build
 npm run test:e2e
 ```
 
-O objetivo é manter:
+antes de serem integradas à branch principal.
 
-```text
-ESLint        verde
-TypeScript    verde
-Vite build    verde
-Playwright    verde
-```
+## Limitações conhecidas
 
----
+- blockchain e transações são simuladas;
+- provedores de carteira são simulados;
+- login social é apresentado como parte da interface, sem autenticação OAuth externa;
+- a aplicação não depende de backend privado para a demonstração;
+- alguns conteúdos editoriais da interface são demonstrativos;
+- a cobertura prioriza os fluxos essenciais do desafio.
 
-## Responsividade
+## Repositórios
 
-A interface foi desenvolvida para três referências principais:
+Desafio original:
 
-```text
-Mobile
-Tablet
-Desktop
-```
+https://github.com/junglegaming/frontend-challenge
 
-A adaptação não se limita à redução de largura. Algumas telas alteram composição, espaçamento, navegação e hierarquia para acomodar corretamente cada viewport.
+Implementação:
 
----
-
-## Decisões técnicas
-
-### TanStack Query
-
-Utilizado para estado assíncrono, cache, mutations, invalidação e sincronização entre REST e eventos Socket.IO.
-
-### TanStack Router
-
-Utilizado para roteamento tipado, parâmetros de rota e filtros de catálogo representados na URL.
-
-### MSW
-
-Permite simular uma API REST realista sem acoplar a interface diretamente às fixtures.
-
-### Socket.IO
-
-A camada de realtime atualiza dados do NFT e pedidos através do cache do TanStack Query.
-
-### LocalStorage
-
-Utilizado somente como persistência do ambiente mockado, já que o desafio não possui backend persistente real.
-
-### Idempotência
-
-A criação de pedidos utiliza uma chave de idempotência para reduzir o risco de pedidos duplicados em tentativas repetidas.
-
----
-
-## Limitações do ambiente mockado
-
-Este projeto é um frontend demonstrativo.
-
-Por isso:
-
-- não existe blockchain real;
-- não existem transações financeiras reais;
-- WalletConnect, MetaMask e Coinbase Wallet fazem parte da representação do fluxo;
-- Google e Facebook são elementos de interface e não possuem OAuth real;
-- contas e pedidos são armazenados localmente;
-- Socket.IO é exercitado como camada frontend de atualização;
-- o ambiente MSW substitui um backend externo.
-
----
-
-## Deploy
-
-Aplicação:
-
-https://frontend-challenge-theta-inky.vercel.app/
-
-O deploy é realizado pela Vercel a partir da branch `main`.
-
----
-
-## Status
-
-```text
-Build        OK
-Lint         OK
-E2E          114/114
-Responsive   Mobile / Tablet / Desktop
-Deploy       Vercel
-```
-
----
-
-## Autor
-
-Desenvolvido para o Frontend Challenge da Kurio.
+https://github.com/mayconwallas/frontend-challenge
