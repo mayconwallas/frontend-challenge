@@ -7,8 +7,6 @@ import {
 
 import { QueryProvider } from '@/app/providers/query-provider'
 import { enableMocking } from '@/mocks/enable-mocking'
-import { connectSocket } from '@/services/socket/socket-lifecycle'
-import { registerSocketQueryBridge } from '@/services/socket/socket-query-bridge'
 
 import { routeTree } from './routeTree.gen'
 import './index.css'
@@ -23,19 +21,61 @@ declare module '@tanstack/react-router' {
   }
 }
 
-function renderApplication() {
+async function enableRealtime() {
+  const [
+    { connectSocket },
+    { registerSocketQueryBridge },
+  ] = await Promise.all([
+    import(
+      '@/services/socket/socket-lifecycle'
+    ),
+    import(
+      '@/services/socket/socket-query-bridge'
+    ),
+  ])
+
   registerSocketQueryBridge()
   connectSocket()
+}
 
-  createRoot(
-    document.getElementById('root')!,
-  ).render(
+function scheduleRealtime() {
+  const startRealtime = () => {
+    void enableRealtime()
+  }
+
+  if (document.readyState === 'complete') {
+    startRealtime()
+    return
+  }
+
+  window.addEventListener(
+    'load',
+    startRealtime,
+    {
+      once: true,
+    },
+  )
+}
+
+function renderApplication() {
+  const rootElement =
+    document.getElementById('root')
+
+  if (!rootElement) {
+    throw new Error(
+      'Elemento raiz da aplicação não encontrado.',
+    )
+  }
+
+  createRoot(rootElement).render(
     <StrictMode>
       <QueryProvider>
         <RouterProvider router={router} />
       </QueryProvider>
     </StrictMode>,
   )
+
+  scheduleRealtime()
 }
 
-enableMocking().then(renderApplication)
+void enableMocking().then(renderApplication)

@@ -4,9 +4,9 @@ import { Link } from '@tanstack/react-router'
 import { PageContainer } from '@/components/layout/page-container'
 import { Section } from '@/components/layout/section'
 import { Button } from '@/components/ui/button'
-import { useAddCartItem } from '@/features/cart'
-import { useNft } from '@/features/catalog'
-import { FavoriteButton } from '@/features/favorites'
+import { useAddCartItem } from '@/features/cart/hooks/use-add-cart-item'
+import { useNft } from '@/features/catalog/hooks/use-nft'
+import { FavoriteButton } from '@/features/favorites/components/favorite-button'
 
 interface NftDetailPageProps {
   nftId: string
@@ -140,6 +140,10 @@ export function NftDetailPage({
               <img
                 src={nft.imageUrl}
                 alt={nft.name}
+                width={720}
+                height={720}
+                loading="eager"
+                fetchPriority="high"
                 className="aspect-square w-full object-cover"
               />
 
@@ -172,6 +176,10 @@ export function NftDetailPage({
                     <img
                       src={nft.imageUrl}
                       alt=""
+                      width={180}
+                      height={180}
+                      loading="lazy"
+                      decoding="async"
                       className="aspect-square w-full object-cover"
                     />
                   </button>
