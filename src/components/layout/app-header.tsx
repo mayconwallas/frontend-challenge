@@ -24,7 +24,7 @@ export function AppHeader() {
 
   return (
     <header className="border-b border-border/70 bg-background">
-      <PageContainer className="flex h-16 items-center justify-between lg:h-[72px]">
+      <PageContainer className="flex h-14 items-center justify-between lg:h-[72px]">
         <Link
           to="/"
           aria-label="Kurio, página inicial"
@@ -35,11 +35,11 @@ export function AppHeader() {
 
         <DesktopNavigation />
 
-        <div className="flex items-center gap-3 lg:gap-4">
+        <div className="flex items-center gap-2 lg:gap-4">
           <button
             type="button"
             aria-label="Pesquisar"
-            className="hidden size-9 items-center justify-center text-foreground transition-colors hover:text-primary lg:flex"
+            className="flex size-9 items-center justify-center text-foreground transition-colors hover:text-primary"
           >
             <svg
               aria-hidden="true"
@@ -109,7 +109,18 @@ export function AppHeader() {
             <>
               <Link
                 to="/profile"
-                className="hidden max-w-28 truncate text-xs text-foreground transition-colors hover:text-primary sm:block"
+                aria-label="Abrir meu perfil"
+                className="flex size-8 items-center justify-center rounded-full border border-border text-xs font-bold text-primary transition-colors hover:border-primary lg:hidden"
+              >
+                {session.user.name
+                  .trim()
+                  .charAt(0)
+                  .toUpperCase()}
+              </Link>
+
+              <Link
+                to="/profile"
+                className="hidden max-w-28 truncate text-xs text-foreground transition-colors hover:text-primary lg:block"
               >
                 {session.user.name}
               </Link>
@@ -130,7 +141,7 @@ export function AppHeader() {
           ) : (
             <Link
               to="/login"
-              className="flex h-8 items-center rounded-[4px] bg-primary px-4 text-xs font-bold text-primary-foreground transition-colors hover:bg-accent"
+              className="flex h-8 items-center rounded-[4px] bg-primary px-3 text-[11px] font-bold text-primary-foreground transition-colors hover:bg-accent sm:px-4 sm:text-xs"
             >
               Entrar
             </Link>
