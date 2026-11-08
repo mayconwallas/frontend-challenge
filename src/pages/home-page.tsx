@@ -105,97 +105,61 @@ export function HomePage() {
 
   return (
     <PageContainer>
-      <Section>
-        <div className="overflow-hidden border border-border bg-card">
-          <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.85fr)]">
-            <div className="flex flex-col justify-center px-6 py-10 sm:px-8 sm:py-14 lg:px-12 lg:py-16">
-              <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
-                Bem-vindo à Kurio
-              </p>
+      <Section className="pb-8 pt-7 md:pb-10 lg:pb-12 lg:pt-10">
+        <div className="overflow-hidden lg:grid lg:min-h-[440px] lg:grid-cols-[minmax(0,1fr)_390px] lg:items-center lg:gap-16">
+          <div className="flex flex-col justify-center py-8 lg:py-10">
+            <p className="text-xs font-medium tracking-[0.08em] text-foreground">
+              Bem-vindo à Kurio
+            </p>
 
-              <h1 className="mt-5 max-w-[650px] text-4xl font-bold uppercase leading-[1.08] text-foreground sm:text-5xl lg:text-[58px]">
-                Seja dono da cultura digital
-              </h1>
+            <h1 className="mt-5 max-w-[620px] text-[38px] font-bold uppercase leading-[1.24] tracking-[-0.025em] text-foreground sm:text-5xl lg:text-[52px]">
+              Seja dono do futuro
+              <br />
+              da arte digital
+            </h1>
 
-              <p className="mt-6 max-w-[560px] text-sm leading-7 text-muted-foreground sm:text-base">
-                Descubra NFTs selecionados de
-                criadores do mundo todo e encontre
-                novas obras para sua coleção.
-              </p>
+            <p className="mt-5 max-w-[520px] text-sm leading-6 text-muted-foreground">
+              Descubra NFTs selecionados de criadores
+              emergentes e consagrados. Colecione arte
+              digital rara, apoie artistas e tenha uma
+              parte da cultura da internet.
+            </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button
-                  type="button"
-                  onClick={handleExplore}
-                  className="h-12 px-8 text-base font-bold"
-                >
-                  Explorar NFTs
-                </Button>
-
-                <button
-                  type="button"
-                  onClick={handleExplore}
-                  className="h-12 border border-border px-8 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
-                >
-                  Ver coleções
-                </button>
-              </div>
-
-              <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-border pt-6">
-                <div>
-                  <dt className="text-xs uppercase tracking-wider text-muted-foreground">
-                    Mercado
-                  </dt>
-
-                  <dd className="mt-1 font-semibold text-foreground">
-                    NFTs
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-xs uppercase tracking-wider text-muted-foreground">
-                    Redes
-                  </dt>
-
-                  <dd className="mt-1 font-semibold text-foreground">
-                    3
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className="text-xs uppercase tracking-wider text-muted-foreground">
-                    Compra
-                  </dt>
-
-                  <dd className="mt-1 font-semibold text-foreground">
-                    Segura
-                  </dd>
-                </div>
-              </dl>
+            <div className="mt-7">
+              <Button
+                type="button"
+                onClick={handleExplore}
+                className="h-11 rounded-[4px] px-7 text-sm font-bold uppercase"
+              >
+                Explorar
+              </Button>
             </div>
 
-            <div className="relative min-h-[300px] border-t border-border bg-background lg:min-h-[520px] lg:border-l lg:border-t-0">
-              <div className="absolute inset-6 border border-primary/30 sm:inset-8">
-                <div className="absolute inset-4 border border-border">
-                  <div className="flex h-full flex-col justify-between p-6 sm:p-8">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.25em] text-primary">
-                        Kurio Marketplace
-                      </p>
+            <div
+              aria-hidden="true"
+              className="mt-10 hidden items-center justify-end gap-2 lg:flex"
+            >
+              <span className="size-2 rounded-full bg-primary" />
+              <span className="size-2 rounded-full bg-primary/45" />
+              <span className="size-2 rounded-full bg-primary/45" />
+            </div>
+          </div>
 
-                      <p className="mt-3 max-w-xs text-2xl font-semibold leading-tight text-foreground sm:text-3xl">
-                        Arte digital para uma nova
-                        geração de colecionadores.
-                      </p>
-                    </div>
+          <div className="relative mx-auto w-full max-w-[390px] lg:mx-0">
+            <div className="overflow-hidden rounded-[12px] bg-[#e8e7c8]">
+              <img
+                src="/images/nfts/emerald-ape-042.png"
+                alt="Emerald Ape, NFT em destaque"
+                width={720}
+                height={720}
+                fetchPriority="high"
+                className="aspect-square w-full object-cover"
+              />
+            </div>
 
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="aspect-[4/3] bg-primary/20" />
-                      <div className="aspect-[4/3] translate-y-5 bg-primary/10" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="mt-4 flex items-center justify-between text-[11px] text-muted-foreground">
+              <p>NFT em destaque</p>
+              <p>Arte digital selecionada</p>
             </div>
           </div>
         </div>
@@ -204,29 +168,9 @@ export function HomePage() {
       <Section
         id="marketplace"
         aria-label="Marketplace"
+        className="pt-8 lg:pt-10"
       >
-        <div className="mb-8 flex flex-col gap-3 border-b border-border pb-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary">
-              Marketplace
-            </p>
-
-            <h2 className="mt-2 text-3xl font-semibold text-foreground">
-              Coleções
-            </h2>
-          </div>
-
-          {nftsQuery.isSuccess && (
-            <p className="text-sm text-muted-foreground">
-              {nftsQuery.data.total}{' '}
-              {nftsQuery.data.total === 1
-                ? 'NFT encontrado'
-                : 'NFTs encontrados'}
-            </p>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-10 xl:gap-12">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8 xl:gap-10">
           <CatalogSidebar
             collection={filters.collection}
             network={filters.network}
@@ -242,15 +186,11 @@ export function HomePage() {
             <CatalogToolbar
               tab={filters.tab}
               sort={filters.sort}
-              onTabChange={
-                handleTabChange
-              }
-              onSortChange={
-                handleSortChange
-              }
+              onTabChange={handleTabChange}
+              onSortChange={handleSortChange}
             />
 
-            <div className="mt-6">
+            <div className="mt-5">
               {nftsQuery.isPending && (
                 <CatalogFeedback type="loading" />
               )}

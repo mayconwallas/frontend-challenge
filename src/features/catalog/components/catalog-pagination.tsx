@@ -11,7 +11,10 @@ export function CatalogPagination({
   pageSize,
   onPageChange,
 }: CatalogPaginationProps) {
-  const totalPages = Math.max(1, Math.ceil(total / pageSize))
+  const totalPages = Math.max(
+    1,
+    Math.ceil(total / pageSize),
+  )
 
   if (totalPages <= 1) {
     return null
@@ -20,25 +23,34 @@ export function CatalogPagination({
   return (
     <nav
       aria-label="Paginação do catálogo"
-      className="mt-[88px] flex justify-center"
+      className="mt-10 flex justify-center lg:justify-end"
     >
       <div className="flex items-center gap-2">
         {Array.from(
-          { length: totalPages },
+          {
+            length: totalPages,
+          },
           (_, index) => index + 1,
         ).map((pageNumber) => {
-          const isActive = page === pageNumber
+          const isActive =
+            page === pageNumber
 
           return (
             <button
               key={pageNumber}
               type="button"
-              aria-current={isActive ? 'page' : undefined}
-              onClick={() => onPageChange(pageNumber)}
+              aria-current={
+                isActive
+                  ? 'page'
+                  : undefined
+              }
+              onClick={() =>
+                onPageChange(pageNumber)
+              }
               className={
                 isActive
-                  ? 'flex h-[35px] w-[35px] items-center justify-center rounded-[4px] bg-primary text-[18px] font-bold text-primary-foreground'
-                  : 'flex h-[35px] w-[35px] items-center justify-center rounded-[4px] border border-border text-[18px] text-foreground'
+                  ? 'flex h-8 w-8 items-center justify-center rounded-[4px] bg-primary text-xs font-bold text-primary-foreground'
+                  : 'flex h-8 w-8 items-center justify-center rounded-[4px] border border-border text-xs text-foreground transition-colors hover:border-primary hover:text-primary'
               }
             >
               {pageNumber}
@@ -50,8 +62,10 @@ export function CatalogPagination({
           <button
             type="button"
             aria-label="Próxima página"
-            onClick={() => onPageChange(page + 1)}
-            className="flex h-[35px] w-[35px] items-center justify-center rounded-[4px] border border-border text-[18px] text-foreground"
+            onClick={() =>
+              onPageChange(page + 1)
+            }
+            className="flex h-8 w-8 items-center justify-center rounded-[4px] border border-border text-xs text-foreground transition-colors hover:border-primary hover:text-primary"
           >
             →
           </button>

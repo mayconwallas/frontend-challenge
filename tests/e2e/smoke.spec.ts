@@ -5,24 +5,23 @@ test('renders the application shell', async ({ page }) => {
 
   await expect(
     page.getByRole('heading', {
-      name: /seja dono da cultura digital/i,
+      name: /seja dono do futuro da arte digital/i,
     }),
   ).toBeVisible()
 
   await expect(
     page.getByRole('button', {
-      name: 'Explorar NFTs',
+      name: 'Explorar',
       exact: true,
     }),
   ).toBeVisible()
 
   await expect(
     page.getByRole('link', {
-      name: /kurio - página inicial/i,
+      name: /kurio, página inicial/i,
     }),
   ).toBeVisible()
 })
-
 
 test('shows the correct navigation for the viewport', async ({
   page,
